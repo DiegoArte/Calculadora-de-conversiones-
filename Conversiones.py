@@ -1,65 +1,131 @@
 # -*- coding: cp1252 -*-
+from Tkinter import *
 def con():
-    op=raw_input("Convertir:")
-    op2=raw_input("a:")
-    if op=="Km" and op2=="M":
-        KmM()
-    elif op=="M" and op2=="Km":
-        MKm()
-    elif op=="M" and op2=="Ft":
-        MFt()
-    elif op=="Ft" and op2=="M":
-        FtM()
-    elif op=="Cm" and op2=="P":
-        cmP()
-    elif op=="Yd" and op2=="M":
-        ydM()
-    elif op=="Mile" and op2=="Km":
-        mileKm()
-    elif op=="Celsius" and op2=="Farenheit":
-        CF()
-    else:
-        print "ERROR"
+    q=de(op)
+    p=a(op2)
+    if q==1 and p==1:
+        r.set( float( c.get() )*1000)
+    elif q=="Metros" and p=="Kilometros":
+        r.set( float( c.get() )/1000)
+    elif q=="Metros" and p=="Pies":
+        r.set( float( c.get() )*3.281)
+    elif q=="Pies" and p=="Metros":
+        r.set( float( c.get() )/3.281)
+    elif q=="Centimetros" and p=="Pulgadas":
+        r.set( float( c.get() )/2.54) 
+    elif q=="Yardas" and p=="Metros":
+        r.set( float( c.get() )/1.094) 
+    elif q=="Millas" and p=="Kilometros":
+        r.set( float( c.get() )*1.609)
+    elif q=="Grados C" and p=="Grados F":
+        r.set( float( c.get() )* (9/5) + 32) 
+        
+def de(op):
+    global q
+    if op==OptionList[0]:
+        q=1
+        trr.set("Km")
+    elif op==OptionList[1]:
+        q="Metros"
+        trr.set("M")
+    elif op=="Metros":
+        q="Metros"
+        trr.set("M")
+    elif op=="Pies":
+        q="Pies"
+        trr.set("Ft")
+    elif op=="Centimetros":
+        q="Centimetros"
+        trr.set("Cm")
+    elif op=="Yardas":
+        q="Yardas"
+        trr.set("Yd")
+    elif op=="Millas":
+        q="Millas"
+        trr.set("Milles")
+    elif op=="Grados C":
+        q="Grados C"
+        trr.set("C°")
+    return q
+        
+def a(op2):
+    global p
+    if op2=="Metros":
+        p=1
+        trrr.set("M")
+    elif op2=="Kilometros":
+        p="Kilometros"
+        trrr.set("Km")
+    elif op2=="Pies":
+        p="Pies"
+        trrr.set("Ft")
+    elif op2=="Metros":
+        p="Metros"
+        trrr.set("M")
+    elif op2=="Pulgadas":
+        p="Pulgadas"
+        trrr.set("P")
+    elif op2=="Metros":
+        p="Metros"
+        trrr.set("M")
+    elif op2=="Kilometros":
+        p="Kilometros"
+        trrr.set("Km")
+    elif op2=="Grados F":
+        p="Grados F"
+        trrr.set("F°")
+    return p
+       
 
-def KmM():
-    Km=float(input("Dame los kilómetros:"))
-    m=Km*1000
-    print "Eso es equivalente a",m,"metros"
 
-def MKm():
-    m=float(input("Dame los metros:"))
-    Km=m/1000
-    print"Eso es equivalente a",Km,"kilómetros"
-      
-def MFt():
-    m=float(input("Dame los metros:"))
-    ft=m*3.281
-    print "Eso es equivalente a",ft,"pies"
 
-def FtM():
-    Ft=float(input("Dame los pies:"))
-    m=Ft/3.281
-    print"Eso es equivalente a",m,"metros"
+OptionList = [
+"Kilometros",
+"Metros",
+"Pies",
+"Centimetros",
+"Yardas",
+"Millas",
+"Grados C",
+]
+OptionList2 = [
+"Metros",
+"Kilometros",
+"Pies",
+"Pulgadas",
+"Grados F",
+]
 
-def cmP():
-    cm=float(input("Dame los centimetros:"))
-    P=cm/2.54
-    print"Eso es queivalente a",P,"pulgadas"
 
-def ydM():
-    yd=float(input("Dame las yardas:"))
-    m=yd/1.094
-    print "Eso es equivalente a",m,"metros"
+root=Tk()
+root.title("Conversiones uwu")
+root.geometry("300x200")
+root.config(bg="pink")
+q=0
+p=0
+c=StringVar()
+r=StringVar()
+trr=StringVar()
+trrr=StringVar()
+trr.set("Km")
+trrr.set("M")
+op=StringVar(root)
+op.set(OptionList[0])
+op2=StringVar(root)
+op2.set(OptionList2[0])
+Label(root, text="Convertir de:", bg="pink", font=("Fixedsys"), anchor="c").place(x=10, y=10)
+Label(root, text="Convertir a:", bg="pink", font=("Fixedsys"), anchor="c").place(x=150, y=10)
+opt = OptionMenu(root, op,command=de, *OptionList)
+opt.config(width=10, font=('Arial', 9), bg='DarkOrchid1')
+opt.place(x=10, y=40)
+opt2 = OptionMenu(root, op2, command=a, *OptionList2)
+opt2.config(width=10, font=('Arial', 9), bg='DarkOrchid1')
+opt2.place(x=150, y=40)
+Entry(root, width=11, justify=LEFT, textvariable=c).place(x=10, y=100)
+Entry(root, width=11, justify=CENTER, state=DISABLED, textvariable=r).place(x=150, y=100)
+Label(root, textvariable=trr, bg="pink", font=("Fixedsys"), anchor="c").place(x=80, y=100)
+Label(root, textvariable=trrr, bg="pink", font=("Fixedsys"), anchor="c").place(x=225, y=100)
+Button(root, text="Aceptar", command=con, font=("Fixedsys",9), bg='DarkOrchid1').place(x=100, y=150)
+root.mainloop()
 
-def mileKm():
-    mile=float(input("Dame las millas:"))
-    Km=mile*1.609
-    print"Eso es equivalente a",Km,"kilómetros"
-
-def CF():
-    c=float(input("Dame grado Celsius:"))
-    f=( c * (9/5)) + 32
-    print"Eso es equivalente a",f,"grado Fahrenheit"
-
-con()
 
